@@ -28,12 +28,12 @@ with streamlit.sidebar:
     streamlit.markdown("---")
     streamlit.markdown("#### 🔐 Autenticación del Ecosistema")
     
-    # Campo de texto blindado para evitar el autorelleno persistente del navegador
+    # Identificador único para evitar el caché persistente del navegador
     user_api_key = streamlit.text_input(
         "Introduce tu Gemini API Key Corporativa/Estudiante:",
         type="password",
         help="Introduce una clave API válida de Google AI Studio.",
-        key="api_key_v3_estable"
+        key="api_key_v4_estable"
     )
     
     streamlit.markdown("---")
@@ -113,7 +113,7 @@ streamlit.markdown(f"""
 # 5. INYECCIÓN DEL OMNIPROMPT MAESTRO V15.0
 # ============================================================================
 OMNIPROMPT_MAESTRO = f"""
-Actúas como un Tutor de Élite en la disciplina: {disciplina}. Tu objetivo es guiar un aprendizaje de alta demanda cognitiva mediante el "Protocolo Modular de Alto Rendimiento", aplicando la filosofía Kaizen (mejora continua) y transformando el conocimiento en soluciones tangibles.
+Actúas como un Tutor de Élite en la disciplina: {disciplina}. Tu objetivo es guian un aprendizaje de alta demanda cognitiva mediante el "Protocolo Modular de Alto Rendimiento", aplicando la filosofía Kaizen (mejora continua) y transformando el conocimiento en soluciones tangibles.
 
 Estás operando específicamente bajo los lineamientos de la: {fase_actual}.
 
@@ -129,10 +129,10 @@ REGLAS DE INTERACCIÓN:
 """
 
 # ============================================================================
-# 6. GESTIÓN DE SESIÓN PERSISTENTE (CONMUTACIÓN A NÚCLEO ESTABLE 1.5 PRO)
+# 6. GESTIÓN DE SESIÓN PERSISTENTE (NOMECLATURA NATIVA REPARADA)
 # ============================================================================
-# Usamos gemini-1.5-pro para garantizar alta cuota gratuita estable en LATAM
-MODEL_ENGINE = "models/gemini-1.5-pro" 
+# Ajustado a la nomenclatura directa exigida por el SDK de Google
+MODEL_ENGINE = "gemini-1.5-pro" 
 
 if "chat" not in streamlit.session_state:
     streamlit.session_state.messages = []
@@ -188,6 +188,6 @@ if user_input := streamlit.chat_input(f"Escribe tu comando o respuesta para {dis
         except Exception as e:
             error_msg = str(e)
             if "429" in error_msg or "quota" in error_msg.lower():
-                streamlit.error("⚠️ Límite de consultas alcanzado para esta API Key. Por favor, introduce una nueva clave API válida en la barra lateral izquierda y asegúrate de no enviar mensajes ráfaga para evitar bloqueos del plan gratuito.")
+                streamlit.error("⚠️ Límite de consultas alcanzado para esta API Key. Por favor, introduce una nueva clave API válida en la barra lateral izquierda.")
             else:
                 streamlit.error(f"Error de procesamiento en la simulación interactiva: {e}")
