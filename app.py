@@ -72,7 +72,7 @@ with streamlit.sidebar:
         streamlit.rerun()
 
     streamlit.markdown("---")
-    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método Modular v16.3 - Final Corregido<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
+    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método Modular v16.4 - UTF-8 Seguro<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
 
 # ============================================================================
 # 4. ENCABEZADO DE LA PLATAFORMA
@@ -91,7 +91,7 @@ if "Fisiología Renal" in tema:
     # FASE 1
     streamlit.markdown("""
         <div class='phase-box fase1'>
-            <div class='titulo-fase'>💧 Fase 1: El Filtro de Agua de la Vida (Concepto Intuitivo)</div>
+            <div class='titulo-fase'>[Fase 1] El Filtro de Agua de la Vida (Concepto Intuitivo)</div>
             <p>Imagina que los riñones de un perro son como el <b>sistema de filtración de una piscina olímpica</b>. Si la bomba de agua funciona bien, la basura se va y el agua se mantiene cristalina. Pero ¿qué pasa si una sustancia tóxica (como el anticongelante de carros o una infección grave) avienta arena dentro del motor de la bomba?</p>
             <p>El filtro se tapa de golpe. La basura (toxinas urémicas) empieza a acumularse en la sangre, intoxicando a todo el cuerpo en cuestión de horas. Esto es una <b>Insuficiencia Renal Aguda</b>.</p>
         </div>
@@ -102,6 +102,79 @@ if "Fisiología Renal" in tema:
             "Si la bomba de filtración renal se queda sin presión por deshidratación severa, ¿cuál es el efecto inmediato?",
             ["A) Las toxinas se eliminan más rápido.", "B) El organismo acumula desechos metabólicos tóxicos en la sangre por falta de filtrado.", "C) El riñón genera más nefronas de inmediato."],
             key="renal_r1"
+        )
+        if streamlit.button("Validar Fase 1", key="btn_r1"):
+            if "B)" in r1:
+                streamlit.success("🎉 ¡Excelente! Fase 2 desbloqueada.")
+                streamlit.session_state.fase2_desbloqueada = True
+                streamlit.rerun()
+            else:
+                streamlit.error("❌ Incorrecto. Analiza la falta de filtración.")
+
+    # FASE 2
+    if streamlit.session_state.fase2_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase2'>
+                <div class='titulo-fase'>[Fase 2] Fisiopatología de la Tasa de Filtración Glomerular (Rigor Técnico)</div>
+                <p>La Insuficiencia Renal Aguda se caracteriza por una caída abrupta de la <b>Tasa de Filtración Glomerular (TFG)</b>, desencadenando <b>Azotemia</b>. A nivel epitelial, ocurre una <b>Necrosis Tubular Aguda (NTA)</b>, donde el filtrado celular sufre una fuga retrógrada (back-leak), colapsando la presión hidrostática glomerular.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        with streamlit.expander("🧪 RETO COGNITIVO 2: Evalúa el rigor técnico para desbloquear la Fase 3"):
+            r2 = streamlit.radio(
+                "¿Por qué la Necrosis Tubular Aguda colapsa la filtración renal?",
+                ["A) Por una reabsorción retrógrada anómala (back-leak) del filtrado hacia el intersticio.", "B) Por aumento drástico de la presión oncótica celular.", "C) Por aceleración mitótica."],
+                key="renal_r2"
+            )
+            if streamlit.button("Validar Fase 2", key="btn_r2"):
+                if "A)" in r2:
+                    streamlit.success("🚀 ¡Rigor impecable! Fase 3 desbloqueada.")
+                    streamlit.session_state.fase3_desbloqueada = True
+                    streamlit.rerun()
+                else:
+                    streamlit.error("❌ Incorrecto. Revisa el concepto de back-leak.")
+
+    # FASE 3
+    if streamlit.session_state.fase3_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase3'>
+                <div class='titulo-fase'>[Fase 3] Caso Clínico de Aplicación Real (Solución Tangible)</div>
+                <p><b>Paciente:</b> Canino, Golden Retriever, 4 años. Creatinina en 5.8 mg/dL y oliguria tras ingerir etilenglicol. <b>Plan de Acción:</b> Fluidoterapia intravenosa inmediata con soluciones cristaloides isotónicas para restablecer la perfusión glomerular y monitoreo de diuresis horaria.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        streamlit.balloons()
+
+# ----------------------------------------------------------------------------
+# CASO 2: BIOLOGÍA CELULAR Y MITOSIS
+# ----------------------------------------------------------------------------
+elif "Biología Celular" in tema:
+    # FASE 1
+    streamlit.markdown("""
+        <div class='phase-box fase1'>
+            <div class='titulo-fase'>[Fase 1] La Fotocopiadora Biológica Descompuesta (Concepto Intuitivo)</div>
+            <p>Imagina que la división celular (mitosis) es como una <b>fotocopiadora industrial</b> que duplica los planos de un edificio. Si la fotocopiadora funciona bien, saca una copia idéntica y se apaga. Pero ¿qué pasa si el botón de encendido se queda trabado y la máquina empieza a sacar millones de copias sin control, gastando todo el papel y la luz de la oficina?</p>
+            <p>Eso es un <b>tumor o cáncer canino</b>: células rebeldes que olvidaron cómo dejar de fotocopiarse a sí mismas, acumulándose y robando la energía y nutrientes de los tejidos sanos del perro.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    with streamlit.expander("📝 RETO COGNITIVO 1: Demuestra tu intuición para desbloquear la Fase 2"):
+        r1_bio = streamlit.radio(
+            "Bajo esta analogía, ¿qué es un tumor maligno a nivel tisular?",
+            ["A) Una célula que decidió trabajar más rápido para sanar un tejido.", "B) Una masa de copias celulares descontroladas que saturan y destruyen el espacio de las células sanas.", "C) Un virus que detiene la producción de copias."],
+            key="bio_r1"
+        )
+        if streamlit.button("Validar Fase 1", key="btn_bio1"):
+            if "B)" in r1_bio:
+                streamlit.success("🎉 ¡Excelente analogía comprendida! El puente al rigor técnico formal de la mitosis está abierto.")
+                streamlit.session_state.fase2_desbloqueada = True
+                streamlit.rerun()
+            else:
+                streamlit.error("❌ Incorrecto. Piensa en la fotocopiadora atascada llenando la oficina de papel inservible.")
+
+    # FASE 2
+    if streamlit.session_state.fase2_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase2
         )
         if streamlit.button("Validar Fase 1", key="btn_r1"):
             if "B)" in r1:
