@@ -11,7 +11,7 @@ streamlit.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos personalizados para una experiencia visual de alta gama (Modo Oscuro/Premium)
+# Estilos personalizados para una experiencia visual de alta gama
 streamlit.markdown("""
     <style>
     .main-title { font-size: 2.6rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.5rem; }
@@ -28,35 +28,43 @@ with streamlit.sidebar:
     streamlit.markdown("---")
     streamlit.markdown("#### 🔐 Autenticación del Ecosistema")
     
-    # Doble vía de acceso: API Key del usuario (SaaS B2C) o Secrets del Servidor (SaaS B2B)
+    # Campo de texto limpio
     user_api_key = streamlit.text_input(
         "Introduce tu Gemini API Key Corporativa/Estudiante:",
         type="password",
-        help="Para comercializar la app, los usuarios introducen su propia llave protegiendo tus costos de infraestructura."
+        help="Introduce una nueva clave válida. Para limpiar errores, escribe una sola letra y presiona Enter."
     )
     
     streamlit.markdown("---")
     streamlit.markdown("#### 🛠️ Configuración del Motor")
     temperatura = streamlit.slider("Nivel de Creatividad (Kaizen):", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
     
-    # Botón de reset imperativo para limpiar la memoria de la sesión
+    # Botón de reset imperativo
     reset_session = streamlit.button("🔄 Reiniciar Ciclo de Alto Rendimiento")
     
     streamlit.markdown("---")
     streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método de Simulación Interactiva v15.0<br>© 2026 Ecosistema de Aprendizaje de Alto Rendimiento</p>", unsafe_allow_html=True)
 
 # ============================================================================
-# 3. CAPA DE SEGURIDAD Y VALIDACIÓN DE CREDENCIALES API
+# 3. INTERRUPTOR DE LIMPIEZA FORZADA (BLINDAJE DE BACKEND)
 # ============================================================================
+# Si el usuario escribe una clave inválida corta o presiona reset, destruimos el caché trabado inmediatamente
+if reset_session or (user_api_key and len(user_api_key) < 20):
+    if "chat" in streamlit.session_state:
+        del streamlit.session_state.chat
+    if "messages" in streamlit.session_state:
+        streamlit.session_state.messages = []
+    streamlit.warning("🔄 Memoria del servidor limpiada con éxito. Procede a ingresar tu nueva clave válida.")
+
+# Asignación de API Key
 API_KEY = None
-if user_api_key:
+if user_api_key and len(user_api_key) >= 20:
     API_KEY = user_api_key
 elif "GOOGLE_API_KEY" in streamlit.secrets:
     API_KEY = streamlit.secrets["GOOGLE_API_KEY"]
 
 if not API_KEY:
-    streamlit.warning("🔑 Conexión Protegida: Introduce tu API Key en la barra lateral izquierda para inicializar el backend.")
-    streamlit.info("💡 Nota de producción: La arquitectura acepta llaves dinámicas por usuario para facilitar el modelo de negocio Freemium.")
+    streamlit.warning("🔑 Conexión Protegida: Introduce tu API Key válida en la barra lateral izquierda para inicializar el backend.")
     streamlit.stop()
 
 try:
@@ -71,7 +79,6 @@ except Exception as e:
 streamlit.markdown("<div class='main-title'>🧠 Ecosistema de Aprendizaje de Alto Rendimiento</div>", unsafe_allow_html=True)
 streamlit.markdown("<div class='sub-title'>Plataforma de Simulación Interactiva Orientada a Soluciones Tangibles (Engine: Gemini 2.0 Flash)</div>", unsafe_allow_html=True)
 
-# Selectores dinámicos que alteran el comportamiento del Omniprompt Maestro en tiempo real
 col_disp, col_fase = streamlit.columns([1, 1])
 
 with col_disp:
@@ -96,15 +103,14 @@ with col_fase:
         ]
     )
 
-# Cuadro informativo dinámico según la fase seleccionada
 streamlit.markdown(f"""
     <div class='phase-box'>
-        <strong>Enfoque de Configuración Actual:</strong> Operando bajo la <strong>{fase_actual}</strong> para la disciplina de <strong>{disciplina}</strong>. El modelo ajustará su andamiaje cognitivo automáticamente.
+        <strong>Enfoque de Configuración Actual:</strong> Operando bajo la <strong>{fase_actual}</strong> para la disciplina de <strong>{disciplina}</strong>.
     </div>
 """, unsafe_allow_html=True)
 
 # ============================================================================
-# 5. INYECCIÓN DEL OMNIPROMPT MAESTRO V15.0 (BACKEND OCULTO)
+# 5. INYECCIÓN DEL OMNIPROMPT MAESTRO V15.0
 # ============================================================================
 OMNIPROMPT_MAESTRO = f"""
 Actúas como un Tutor de Élite en la disciplina: {disciplina}. Tu objetivo es guiar un aprendizaje de alta demanda cognitiva mediante el "Protocolo Modular de Alto Rendimiento", aplicando la filosofía Kaizen (mejora continua) y transformando el conocimiento en soluciones tangibles.
@@ -125,10 +131,9 @@ REGLAS DE INTERACCIÓN:
 # ============================================================================
 # 6. GESTIÓN DE ESTADOS DE SESIÓN Y MEMORIA PERSISTENTE (ENGINE GEMINI 2.0)
 # ============================================================================
-# Empleamos la infraestructura oficial de última generación de Google AI Studio
 MODEL_ENGINE = "models/gemini-2.0-flash" 
 
-if "chat" not in streamlit.session_state or reset_session:
+if "chat" not in streamlit.session_state:
     streamlit.session_state.messages = []
     streamlit.session_state.disciplina_actual = disciplina
     streamlit.session_state.fase_actual = fase_actual
@@ -142,7 +147,6 @@ if "chat" not in streamlit.session_state or reset_session:
     )
     streamlit.session_state.chat = model.start_chat(history=[])
 
-# Reinicio adaptativo automático si cambian los componentes visuales superiores
 if (streamlit.session_state.disciplina_actual != disciplina) or (streamlit.session_state.fase_actual != fase_actual):
     streamlit.session_state.messages = []
     streamlit.session_state.disciplina_actual = disciplina
@@ -181,4 +185,8 @@ if user_input := streamlit.chat_input(f"Escribe tu comando o respuesta para {dis
             streamlit.session_state.messages.append({"role": "assistant", "content": response.text})
             
         except Exception as e:
-            streamlit.error(f"Error de procesamiento en la simulación interactiva: {e}")
+            error_msg = str(e)
+            if "429" in error_msg or "quota" in error_msg.lower():
+                streamlit.error("⚠️ Límite de consultas alcanzado para esta API Key. Por favor, introduce una nueva clave API válida en la barra lateral izquierda y asegúrate de no enviar mensajes ráfaga para evitar bloqueos del plan gratuito.")
+            else:
+                streamlit.error(f"Error de procesamiento en la simulación interactiva: {e}")
