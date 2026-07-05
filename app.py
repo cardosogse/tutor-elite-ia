@@ -72,10 +72,10 @@ with streamlit.sidebar:
         streamlit.rerun()
 
     streamlit.markdown("---")
-    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método Modular v16.2 - Sintaxis Reparada<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
+    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método Modular v16.3 - Final Corregido<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
 
 # ============================================================================
-# 4. ENCABEZADO DE LA PLATAFORMA (LÍNEA CORREGIDA)
+# 4. ENCABEZADO DE LA PLATAFORMA
 # ============================================================================
 streamlit.markdown("<div class='main-title'>🧠 Ecosistema de Aprendizaje Estructurado</div>", unsafe_allow_html=True)
 streamlit.markdown(f"<div class='sub-title'>Plataforma Interactiva Orientada a Soluciones Tangibles // <b>Módulo: {tema}</b></div>", unsafe_allow_html=True)
@@ -102,6 +102,42 @@ if "Fisiología Renal" in tema:
             "Si la bomba de filtración renal se queda sin presión por deshidratación severa, ¿cuál es el efecto inmediato?",
             ["A) Las toxinas se eliminan más rápido.", "B) El organismo acumula desechos metabólicos tóxicos en la sangre por falta de filtrado.", "C) El riñón genera más nefronas de inmediato."],
             key="renal_r1"
+        )
+        if streamlit.button("Validar Fase 1", key="btn_r1"):
+            if "B)" in r1:
+                streamlit.success("🎉 ¡Excelente! Fase 2 desbloqueada.")
+                streamlit.session_state.fase2_desbloqueada = True
+                streamlit.rerun()
+            else:
+                streamlit.error("❌ Incorrecto. Analiza la falta de filtración.")
+
+    # FASE 2
+    if streamlit.session_state.fase2_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase2'>
+                <div class='titulo-fase'>🔬 Fase 2: Fisiopatología de la Tasa de Filtración Glomerular (Rigor Técnico)</div>
+                <p>La Insuficiencia Renal Aguda se caracteriza por una caída abrupta de la <b>Tasa de Filtración Glomerular (TFG)</b>, desencadenando <b>Azotemia</b>. A nivel epitelial, ocurre una <b>Necrosis Tubular Aguda (NTA)</b>, donde el filtrado celular sufre una fuga retrógrada (back-leak), colapsando la presión hidrostática glomerular.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        with streamlit.expander("🧪 RETO COGNITIVO 2: Evalúa el rigor técnico para desbloquear la Fase 3"):
+            r2 = streamlit.radio(
+                "¿Por qué la Necrosis Tubular Aguda colapsa la filtración renal?",
+                ["A) Por una reabsorción retrógrada anómala (back-leak) del filtrado hacia el intersticio.", "B) Por aumento drástico de la presión oncótica celular.", "C) Por aceleración mitótica."],
+                key="renal_r2"
+            )
+            if streamlit.button("Validar Fase 2", key="btn_r2"):
+                if "A)" in r2:
+                    streamlit.success("🚀 ¡Rigor impecable! Fase 3 desbloqueada.")
+                    streamlit.session_state.fase3_desbloqueada = True
+                    streamlit.rerun()
+                else:
+                    streamlit.error("❌ Incorrecto. Revisa el concepto de back-leak.")
+
+    # FASE 3
+    if streamlit.session_state.fase3_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase3'>
         )
         if streamlit.button("Validar Fase 1", key="btn_r1"):
             if "B)" in r1:
