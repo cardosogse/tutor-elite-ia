@@ -28,11 +28,12 @@ with streamlit.sidebar:
     streamlit.markdown("---")
     streamlit.markdown("#### 🔐 Autenticación del Ecosistema")
     
-    # Campo de texto limpio
+    # Se añade el parámetro 'key' para forzar al navegador a limpiar el caché viejo
     user_api_key = streamlit.text_input(
         "Introduce tu Gemini API Key Corporativa/Estudiante:",
         type="password",
-        help="Introduce una nueva clave válida. Para limpiar errores, escribe una sola letra y presiona Enter."
+        help="Introduce una clave API válida de Google AI Studio.",
+        key="api_key_v2"
     )
     
     streamlit.markdown("---")
@@ -48,7 +49,6 @@ with streamlit.sidebar:
 # ============================================================================
 # 3. INTERRUPTOR DE LIMPIEZA FORZADA (BLINDAJE DE BACKEND)
 # ============================================================================
-# Si el usuario escribe una clave inválida corta o presiona reset, destruimos el caché trabado inmediatamente
 if reset_session or (user_api_key and len(user_api_key) < 20):
     if "chat" in streamlit.session_state:
         del streamlit.session_state.chat
@@ -56,7 +56,7 @@ if reset_session or (user_api_key and len(user_api_key) < 20):
         streamlit.session_state.messages = []
     streamlit.warning("🔄 Memoria del servidor limpiada con éxito. Procede a ingresar tu nueva clave válida.")
 
-# Asignación de API Key
+# Asignación e inyección controlada de la API Key
 API_KEY = None
 if user_api_key and len(user_api_key) >= 20:
     API_KEY = user_api_key
