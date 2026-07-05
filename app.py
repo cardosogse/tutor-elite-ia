@@ -1,107 +1,153 @@
-import streamlit as streamlit
+import streamlit as st
 
-# ============================================================================
-# 1. CONFIGURACIÓN DE ARQUITECTURA DE MARCA Y UI (ENTORNO PREMIUM)
-# ============================================================================
-streamlit.set_page_config(
-    page_title="Tutor de Elite - Ecosistema de Aprendizaje Modular",
-    page_icon="🧠",
+# 1. CONFIGURACION DEL ENTORNO
+st.set_page_config(
+    page_title="Tutor de Elite",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS de alta gama para mantener el look corporativo premium
-streamlit.markdown("""
-    <style>
-    .main-title { font-size: 2.3rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.3rem; }
-    .sub-title { font-size: 1.0rem; color: #A3AED0; margin-bottom: 1.8rem; }
-    .phase-box { padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 1.2rem; line-height: 1.6; }
-    .fase1 { background-color: #0B1437; border-left: 5px solid #00E5FF; }
-    .fase2 { background-color: #111C44; border-left: 5px solid #4318FF; }
-    .fase3 { background-color: #1B254B; border-left: 5px solid #01B574; }
-    .titulo-fase { font-size: 1.3rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.8rem; }
-    </style>
-""", unsafe_allow_html=True)
+# 2. GESTION DE ESTADOS DE SESION
+if "fase" not in st.session_state:
+    st.session_state.fase = 1
+if "tema_actual" not in st.session_state:
+    st.session_state.tema_actual = ""
 
-# ============================================================================
-# 2. CONTROL DE FLUJO PEDAGÓGICO (ESTADOS DE SESIÓN)
-# ============================================================================
-if "fase2_desbloqueada" not in streamlit.session_state:
-    streamlit.session_state.fase2_desbloqueada = False
-if "fase3_desbloqueada" not in streamlit.session_state:
-    streamlit.session_state.fase3_desbloqueada = False
-if "tema_previo" not in streamlit.session_state:
-    streamlit.session_state.tema_previo = ""
-
-# ============================================================================
-# 3. BARRA LATERAL: CONTROL DE NAVEGACIÓN CURADA (MODELO COMERCIAL SAAS)
-# ============================================================================
-with streamlit.sidebar:
-    streamlit.markdown("### Tutor de Elite IA")
-    streamlit.markdown("---")
-    streamlit.markdown("#### Ruta de Aprendizaje")
+# 3. CONTROL LATERAL (MENUS)
+with st.sidebar:
+    st.header("Tutor de Elite IA")
+    st.write("---")
     
-    disciplina = streamlit.selectbox(
+    disciplina = st.selectbox(
         "Disciplina Cientifica:",
         ["Medicina Veterinaria y Zootecnia", "Biologia Celular y Molecular"]
     )
     
-    # Elige dinámicamente las materias de tu plan educativo
     if disciplina == "Medicina Veterinaria y Zootecnia":
-        opciones_temas = ["Fisiologia Renal: Insuficiencia Renal Aguda (IRA)"]
+        opciones = ["Fisiologia Renal: Insuficiencia Renal Aguda"]
     else:
-        opciones_temas = ["Biologia Celular: Mitosis y Cancer Canino"]
+        opciones = ["Biologia Celular: Mitosis y Cancer Canino"]
         
-    tema = streamlit.selectbox("Selecciona el Modulo Clinico:", opciones_temas)
+    tema = st.selectbox("Modulo Clinico:", opciones)
     
-    # Si el alumno cambia de tema en el menú, reiniciamos el progreso automáticamente
-    if tema != streamlit.session_state.tema_previo:
-        streamlit.session_state.fase2_desbloqueada = False
-        streamlit.session_state.fase3_desbloqueada = False
-        streamlit.session_state.tema_previo = tema
+    # Reinicio automatico si cambia el tema
+    if tema != st.session_state.tema_actual:
+        st.session_state.fase = 1
+        st.session_state.tema_actual = tema
+        
+    st.write("---")
+    st.write(f"Progreso Actual: Fase {st.session_state.fase} de 3")
     
-    streamlit.markdown("---")
-    streamlit.markdown("#### Progreso del Estudiante")
-    streamlit.checkbox("Fase 1: Concepto Intuitivo", value=True, disabled=True)
-    streamlit.checkbox("Fase 2: Rigor Tecnico Formal", value=streamlit.session_state.fase2_desbloqueada, disabled=True)
-    streamlit.checkbox("Fase 3: Solucion Practica", value=streamlit.session_state.fase3_desbloqueada, disabled=True)
-    
-    if streamlit.button("Reiniciar Desafio"):
-        streamlit.session_state.fase2_desbloqueada = False
-        streamlit.session_state.fase3_desbloqueada = False
-        streamlit.rerun()
+    if st.button("Reiniciar Modulo"):
+        st.session_state.fase = 1
+        st.rerun()
 
-    streamlit.markdown("---")
-    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Metodo Modular v16.5 - Texto Seguro<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
+# 4. ENCABEZADO PRINCIPAL
+st.title("Ecosistema de Aprendizaje Estructurado")
+st.subheader(f"Modulo: {tema}")
+st.write("---")
 
-# ============================================================================
-# 4. ENCABEZADO DE LA PLATAFORMA
-# ============================================================================
-streamlit.markdown("<div class='main-title'>Ecosistema de Aprendizaje Estructurado</div>", unsafe_allow_html=True)
-streamlit.markdown(f"<div class='sub-title'>Plataforma Interactiva Orientada a Soluciones Tangibles // <b>Modulo: {tema}</b></div>", unsafe_allow_html=True)
-
-# ============================================================================
-# 5. DESPLIEGUE DE CONTENIDO DINÁMICO SEGÚN EL TEMA SELECCIONADO
-# ============================================================================
-
-# ----------------------------------------------------------------------------
-# CASO 1: FISIOLOGÍA RENAL
-# ----------------------------------------------------------------------------
+# 5. LOGICA DE DESPLIEGUE DE CONTENIDO
 if "Fisiologia Renal" in tema:
-    # FASE 1
-    streamlit.markdown("""
-        <div class='phase-box fase1'>
-            <div class='titulo-fase'>[Fase 1] El Filtro de Agua de la Vida (Concepto Intuitivo)</div>
-            <p>Imagina que los rinones de un perro son como el <b>sistema de filtracion de una piscina olimpica</b>. Si la bomba de agua funciona bien, la basura se va y el agua se mantiene cristalina. Pero ¿que pasa si una sustancia toxica (como el anticongelante de carros o una infeccion grave) avienta arena dentro del motor de la bomba?</p>
-            <p>El filtro se tapa de golpe. La basura (toxinas uremicas) empieza a acumularse en la sangre, intoxicando a todo el cuerpo en cuestion de horas. Esto es una <b>Insuficiencia Renal Aguda</b>.</p>
-        </div>
-    """, unsafe_allow_html=True)
+    
+    # CONTENIDO FASE 1
+    if st.session_state.fase >= 1:
+        st.info("**Fase 1: El Filtro de Agua de la Vida (Concepto Intuitivo)**")
+        st.write("Imagina que los rinones de un perro son como el sistema de filtracion de una piscina. Si la bomba funciona bien, el agua se mantiene limpia. Si una sustancia toxica arroja arena al motor, el filtro se tapa de golpe. Las toxinas se acumulan en la sangre e intoxican al animal en horas. Esto es una Insuficiencia Renal Aguda.")
+        
+        if st.session_state.fase == 1:
+            st.write("---")
+            st.write("**RETO COGNITIVO 1:** Si la bomba se queda sin presion por deshidratacion, ¿cual es la consecuencia?")
+            r1 = st.radio(
+                "Selecciona una opcion:",
+                ["A) Las toxinas se eliminan mas rapido.", "B) El organismo acumula desechos toxicos en sangre por falta de filtrado.", "C) El rinon genera mas nefronas de inmediato."],
+                key="r1_renal"
+            )
+            if st.button("Validar Fase 1"):
+                if "B)" in r1:
+                    st.session_state.fase = 2
+                    st.rerun()
+                else:
+                    st.error("Respuesta incorrecta. Analiza la falta de presion en el filtro.")
 
-    with streamlit.expander("RETO COGNITIVO 1: Demuestra tu intuicion para desbloquear la Fase 2"):
-        r1 = streamlit.radio(
-            "Si la bomba de filtracion renal se queda sin presion por deshidratacion severa, ¿cual es el efecto inmediato?",
-            ["A) Las toxinas se eliminan mas rapido.", "B) El organismo acumula desechos metabolicos toxicos en la sangre por falta de filtrado.", "C) El rinon genera mas nefronas de inmediato."],
-            key="renal_r1"
+    # CONTENIDO FASE 2
+    if st.session_state.fase >= 2:
+        st.write("---")
+        st.warning("**Fase 2: Fisiopatologia de la Tasa de Filtracion Glomerular (Rigor Tecnico)**")
+        st.write("La Insuficiencia Renal Aguda se caracteriza por una caida abrupta de la Tasa de Filtracion Glomerular (TFG), desencadenando Azotemia. A nivel epitelial ocurre una Necrosis Tubular Aguda (NTA), donde el filtrado celular sufre una fuga retrograda (back-leak), colapsando la presion hidrostatica dentro de la capsula de Bowman.")
+        
+        if st.session_state.fase == 2:
+            st.write("---")
+            st.write("**RETO COGNITIVO 2:** ¿Por que la Necrosis Tubular Aguda colapsa la filtracion?")
+            r2 = st.radio(
+                "Selecciona una opcion:",
+                ["A) Por una reabsorcion retrograda anomala (back-leak) del filtrado hacia el intersticio.", "B) Por aumento de la presion oncotica.", "C) Por aceleracion mitotica."],
+                key="r2_renal"
+            )
+            if st.button("Validar Fase 2"):
+                if "A)" in r2:
+                    st.session_state.fase = 3
+                    st.rerun()
+                else:
+                    st.error("Respuesta incorrecta. Revisa el concepto de back-leak.")
+
+    # CONTENIDO FASE 3
+    if st.session_state.fase >= 3:
+        st.write("---")
+        st.success("**Fase 3: Caso Clinico de Aplicacion Real (Solucion Tangible)**")
+        st.write("**Paciente:** Canino, Golden Retriever, 4 anos. Creatinina en 5.8 mg/dL y oliguria tras ingresar etilenglicol. **Plan de Accion:** Fluidoterapia intravenosa inmediata con soluciones cristaloides isotonicas para restablecer la perfusion glomerular y monitoreo de diuresis horaria.")
+        st.balloons()
+
+elif "Biologia Celular" in tema:
+    
+    # CONTENIDO FASE 1
+    if st.session_state.fase >= 1:
+        st.info("**Fase 1: La Fotocopiadora Biologica Descompuesta (Concepto Intuitivo)**")
+        st.write("Imagina que la division celular (mitosis) es como una fotocopiadora industrial que duplica planos. Si la maquina funciona bien, saca una copia y se apaga. Si el boton de encendido se queda trabado, saca millones de copias sin control, gastando el papel y los recursos. Eso es el cancer: celulas que olvidaron como dejar de fotocopiarse.")
+        
+        if st.session_state.fase == 1:
+            st.write("---")
+            st.write("**RETO COGNITIVO 1:** Bajo esta analogia, ¿que es un tumor maligno?")
+            r1_b = st.radio(
+                "Selecciona una opcion:",
+                ["A) Una celula que trabaja mas rapido para sanar.", "B) Una masa de copias celulares descontroladas que saturan el tejido sano.", "C) Un virus que detiene la produccion de copias."],
+                key="r1_bio"
+            )
+            if st.button("Validar Fase 1"):
+                if "B)" in r1_b:
+                    st.session_state.st_fase = 2 # fallback analogo interno
+                    st.session_state.fase = 2
+                    st.rerun()
+                else:
+                    st.error("Respuesta incorrecta. Piensa en las copias acumuladas.")
+
+    # CONTENIDO FASE 2
+    if st.session_state.fase >= 2:
+        st.write("---")
+        st.warning("**Fase 2: Control del Ciclo Celular y Complejos Ciclina-CDK (Rigor Tecnico)**")
+        st.write("La replicacion descontrolada se debe a mutaciones en los genes que regulan los puntos de control (checkpoints) del ciclo celular, especificamente la transicion G1 a S. Las celulas neoplasicas presentan sobreexpresion de Ciclinas y Cinasas dependientes (CDK), evadiendo la Apoptosis regulada por el gen p53.")
+        
+        if st.session_state.fase == 2:
+            st.write("---")
+            st.write("**RETO COGNITIVO 2:** ¿Que alteracion molecular promueve el desarrollo de este cancer?")
+            r2_b = st.radio(
+                "Selecciona una opcion:",
+                ["A) La activacion exacerbada de la apoptosis.", "B) La perdida de control en los checkpoints por desregulacion de complejos Ciclina-CDK.", "C) El aumento de la presion osmotica."],
+                key="r2_bio"
+            )
+            if st.button("Validar Fase 2"):
+                if "B)" in r2_b:
+                    st.session_state.fase = 3
+                    st.rerun()
+                else:
+                    st.error("Respuesta incorrecta. Analiza el papel de las Ciclinas y CDK.")
+
+    # CONTENIDO FASE 3
+    if st.session_state.fase >= 3:
+        st.write("---")
+        st.success("**Fase 3: Aplicacion Diagnostica: Citologia de Mastocitoma (Solucion Tangible)**")
+        st.write("**Caso Clinico:** Canino, Boxer, Hembra, 6 anos. Masa cutanea de crecimiento acelerado. La biopsia por aspiracion muestra celulas redondas con alta relacion nucleo-citoplasma y multiples figuras mitoticas atipicas. Diagnostico: Mastocitoma Grado II. Tratamiento: Reseccion quirurgica.")
+        st.balloons()
         )
         if streamlit.button("Validar Fase 1", key="btn_r1"):
             if "B)" in r1:
