@@ -2,7 +2,7 @@ import streamlit as streamlit
 import google.generativeai as genai
 
 # ============================================================================
-# 1. CONFIGURACIÓN DE ARQUITECTURA PREMIUM DE LA UI
+# 1. CONFIGURACIÓN DE ARQUITECTURA DE MARCA Y UI (ENTORNO PREMIUM)
 # ============================================================================
 streamlit.set_page_config(
     page_title="Tutor de Élite IA - Ecosistema de Alto Rendimiento",
@@ -11,7 +11,7 @@ streamlit.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Inyección estética para el entorno de alta demanda cognitiva
+# Estilos personalizados para una experiencia visual de alta gama
 streamlit.markdown("""
     <style>
     .main-title { font-size: 2.6rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.5rem; }
@@ -21,42 +21,42 @@ streamlit.markdown("""
 """, unsafe_allow_html=True)
 
 # ============================================================================
-# 2. BARRA LATERAL: CONTROL DE ACCESO SAAS (MONETIZACIÓN Y PROTECCIÓN)
+# 2. BARRA LATERAL: CONTROL DE ACCESO Y MONETIZACIÓN (CAPITALIZACIÓN SAAS)
 # ============================================================================
 with streamlit.sidebar:
     streamlit.markdown("### 🧠 Tutor de Élite IA")
     streamlit.markdown("---")
     streamlit.markdown("#### 🔐 Autenticación del Ecosistema")
     
-    # Llave de sesión dinámica para evadir la memoria caché del navegador
+    # Campo de texto blindado para evitar el autorelleno persistente del navegador
     user_api_key = streamlit.text_input(
         "Introduce tu Gemini API Key Corporativa/Estudiante:",
         type="password",
-        help="Introduce una clave API válida generada en un NUEVO proyecto de Google AI Studio.",
-        key="api_v2_prod"
+        help="Introduce una clave API válida de Google AI Studio.",
+        key="api_key_v3_estable"
     )
     
     streamlit.markdown("---")
     streamlit.markdown("#### 🛠️ Configuración del Motor")
     temperatura = streamlit.slider("Nivel de Creatividad (Kaizen):", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
     
-    # Forzar la destrucción de estados de chat corruptos
+    # Botón de reset imperativo
     reset_session = streamlit.button("🔄 Reiniciar Ciclo de Alto Rendimiento")
     
     streamlit.markdown("---")
     streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método de Simulación Interactiva v15.0<br>© 2026 Ecosistema de Aprendizaje de Alto Rendimiento</p>", unsafe_allow_html=True)
 
 # ============================================================================
-# 3. PURGA IMPERATIVA DE MEMORIA EN CACHÉ
+# 3. INTERRUPTOR DE LIMPIEZA FORZADA (BLINDAJE DE BACKEND)
 # ============================================================================
 if reset_session or (user_api_key and len(user_api_key) < 20):
     if "chat" in streamlit.session_state:
         del streamlit.session_state.chat
     if "messages" in streamlit.session_state:
         streamlit.session_state.messages = []
-    streamlit.warning("🔄 Buffer del servidor purgado. Procede a ingresar la clave del proyecto nuevo.")
+    streamlit.warning("🔄 Memoria del servidor purgada con éxito. Procede a ingresar tu clave válida.")
 
-# Resolución de prioridades de API Key
+# Asignación e inyección controlada de la API Key
 API_KEY = None
 if user_api_key and len(user_api_key) >= 20:
     API_KEY = user_api_key
@@ -70,14 +70,14 @@ if not API_KEY:
 try:
     genai.configure(api_key=API_KEY)
 except Exception as e:
-    streamlit.error(f"Error crítico en la inicialización del núcleo de IA: {e}")
+    streamlit.error(f"Error crítico de inicialización en el SDK de Google: {e}")
     streamlit.stop()
 
 # ============================================================================
-# 4. INTERFAZ PRINCIPAL DE CONDUCCIÓN PEDAGÓGICA
+# 4. INTERFAZ PRINCIPAL DE CONDUCCIÓN COGNITIVA
 # ============================================================================
 streamlit.markdown("<div class='main-title'>🧠 Ecosistema de Aprendizaje de Alto Rendimiento</div>", unsafe_allow_html=True)
-streamlit.markdown("<div class='sub-title'>Plataforma de Simulación Interactiva Orientada a Soluciones Tangibles (Engine: Gemini 2.0 Flash)</div>", unsafe_allow_html=True)
+streamlit.markdown("<div class='sub-title'>Plataforma de Simulación Interactiva Orientada a Soluciones Tangibles (Engine: Gemini 1.5 Pro)</div>", unsafe_allow_html=True)
 
 col_disp, col_fase = streamlit.columns([1, 1])
 
@@ -110,7 +110,7 @@ streamlit.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ============================================================================
-# 5. INTEGRACIÓN DEL OMNIPROMPT MAESTRO V15.0
+# 5. INYECCIÓN DEL OMNIPROMPT MAESTRO V15.0
 # ============================================================================
 OMNIPROMPT_MAESTRO = f"""
 Actúas como un Tutor de Élite en la disciplina: {disciplina}. Tu objetivo es guiar un aprendizaje de alta demanda cognitiva mediante el "Protocolo Modular de Alto Rendimiento", aplicando la filosofía Kaizen (mejora continua) y transformando el conocimiento en soluciones tangibles.
@@ -129,9 +129,10 @@ REGLAS DE INTERACCIÓN:
 """
 
 # ============================================================================
-# 6. GESTIÓN DE SESIÓN PERSISTENTE Y MEMORIA NATIVA (GEMINI 2.0)
+# 6. GESTIÓN DE SESIÓN PERSISTENTE (CONMUTACIÓN A NÚCLEO ESTABLE 1.5 PRO)
 # ============================================================================
-MODEL_ENGINE = "models/gemini-2.0-flash" 
+# Usamos gemini-1.5-pro para garantizar alta cuota gratuita estable en LATAM
+MODEL_ENGINE = "models/gemini-1.5-pro" 
 
 if "chat" not in streamlit.session_state:
     streamlit.session_state.messages = []
@@ -162,16 +163,16 @@ if (streamlit.session_state.disciplina_actual != disciplina) or (streamlit.sessi
     streamlit.rerun()
 
 # ============================================================================
-# 7. CAPA DE RENDERIZADO DEL ENTORNO DE INTERACCIÓN
+# 7. RENDERIZADO DEL FLUJO DE CONVERSACIÓN (UI/UX CHAT)
 # ============================================================================
 for message in streamlit.session_state.messages:
     with streamlit.chat_message(message["role"]):
         streamlit.markdown(message["content"])
 
 # ============================================================================
-# 8. CAPA DE ENTRADA Y CONTROL DE EXCEPCIONES DE CUOTA SAAS
+# 8. CAPA DE PROCESAMIENTO ACTIVO Y LLAMADOS A LA API
 # ============================================================================
-if user_input := streamlit.chat_input(f"Escribe tu comando o duda sobre {disciplina}..."):
+if user_input := streamlit.chat_input(f"Escribe tu comando o respuesta para {disciplina}..."):
     streamlit.session_state.messages.append({"role": "user", "content": user_input})
     with streamlit.chat_message("user"):
         streamlit.markdown(user_input)
@@ -187,6 +188,6 @@ if user_input := streamlit.chat_input(f"Escribe tu comando o duda sobre {discipl
         except Exception as e:
             error_msg = str(e)
             if "429" in error_msg or "quota" in error_msg.lower():
-                streamlit.error("⚠️ Cuota insuficiente en el Proyecto de Google Cloud asociado. Para solucionarlo gratis, genera una nueva clave seleccionando 'Crear clave en un proyecto nuevo'. Para producción con múltiples alumnos, activa la facturación Pay-as-you-go en tu consola.")
+                streamlit.error("⚠️ Límite de consultas alcanzado para esta API Key. Por favor, introduce una nueva clave API válida en la barra lateral izquierda y asegúrate de no enviar mensajes ráfaga para evitar bloqueos del plan gratuito.")
             else:
-                streamlit.error(f"Error en el ciclo de ejecución de la simulación: {e}")
+                streamlit.error(f"Error de procesamiento en la simulación interactiva: {e}")
