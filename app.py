@@ -4,7 +4,7 @@ import streamlit as streamlit
 # 1. CONFIGURACIÓN DE ARQUITECTURA DE MARCA Y UI (ENTORNO PREMIUM)
 # ============================================================================
 streamlit.set_page_config(
-    page_title="Tutor de Élite - Ecosistema de Aprendizaje Modular",
+    page_title="Tutor de Elite - Ecosistema de Aprendizaje Modular",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -37,22 +37,22 @@ if "tema_previo" not in streamlit.session_state:
 # 3. BARRA LATERAL: CONTROL DE NAVEGACIÓN CURADA (MODELO COMERCIAL SAAS)
 # ============================================================================
 with streamlit.sidebar:
-    streamlit.markdown("### 🧠 Tutor de Élite IA")
+    streamlit.markdown("### Tutor de Elite IA")
     streamlit.markdown("---")
-    streamlit.markdown("#### 🎯 Ruta de Aprendizaje")
+    streamlit.markdown("#### Ruta de Aprendizaje")
     
     disciplina = streamlit.selectbox(
-        "Disciplina Científica:",
-        ["Medicina Veterinaria y Zootecnia", "Biología Celular y Molecular"]
+        "Disciplina Cientifica:",
+        ["Medicina Veterinaria y Zootecnia", "Biologia Celular y Molecular"]
     )
     
     # Elige dinámicamente las materias de tu plan educativo
     if disciplina == "Medicina Veterinaria y Zootecnia":
-        opciones_temas = ["Fisiología Renal: Insuficiencia Renal Aguda (IRA)"]
+        opciones_temas = ["Fisiologia Renal: Insuficiencia Renal Aguda (IRA)"]
     else:
-        opciones_temas = ["Biología Celular: Mitosis y Cáncer Canino"]
+        opciones_temas = ["Biologia Celular: Mitosis y Cancer Canino"]
         
-    tema = streamlit.selectbox("Selecciona el Módulo Clínico:", opciones_temas)
+    tema = streamlit.selectbox("Selecciona el Modulo Clinico:", opciones_temas)
     
     # Si el alumno cambia de tema en el menú, reiniciamos el progreso automáticamente
     if tema != streamlit.session_state.tema_previo:
@@ -61,24 +61,24 @@ with streamlit.sidebar:
         streamlit.session_state.tema_previo = tema
     
     streamlit.markdown("---")
-    streamlit.markdown("#### 📊 Progreso del Estudiante")
+    streamlit.markdown("#### Progreso del Estudiante")
     streamlit.checkbox("Fase 1: Concepto Intuitivo", value=True, disabled=True)
-    streamlit.checkbox("Fase 2: Rigor Técnico Formal", value=streamlit.session_state.fase2_desbloqueada, disabled=True)
-    streamlit.checkbox("Fase 3: Solución Práctica", value=streamlit.session_state.fase3_desbloqueada, disabled=True)
+    streamlit.checkbox("Fase 2: Rigor Tecnico Formal", value=streamlit.session_state.fase2_desbloqueada, disabled=True)
+    streamlit.checkbox("Fase 3: Solucion Practica", value=streamlit.session_state.fase3_desbloqueada, disabled=True)
     
-    if streamlit.button("🔄 Reiniciar Desafío"):
+    if streamlit.button("Reiniciar Desafio"):
         streamlit.session_state.fase2_desbloqueada = False
         streamlit.session_state.fase3_desbloqueada = False
         streamlit.rerun()
 
     streamlit.markdown("---")
-    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Método Modular v16.4 - UTF-8 Seguro<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
+    streamlit.markdown("<p style='font-size:0.8rem; color:#A3AED0;'>Metodo Modular v16.5 - Texto Seguro<br>© 2026 Ecosistema de Aprendizaje S.A.</p>", unsafe_allow_html=True)
 
 # ============================================================================
 # 4. ENCABEZADO DE LA PLATAFORMA
 # ============================================================================
-streamlit.markdown("<div class='main-title'>🧠 Ecosistema de Aprendizaje Estructurado</div>", unsafe_allow_html=True)
-streamlit.markdown(f"<div class='sub-title'>Plataforma Interactiva Orientada a Soluciones Tangibles // <b>Módulo: {tema}</b></div>", unsafe_allow_html=True)
+streamlit.markdown("<div class='main-title'>Ecosistema de Aprendizaje Estructurado</div>", unsafe_allow_html=True)
+streamlit.markdown(f"<div class='sub-title'>Plataforma Interactiva Orientada a Soluciones Tangibles // <b>Modulo: {tema}</b></div>", unsafe_allow_html=True)
 
 # ============================================================================
 # 5. DESPLIEGUE DE CONTENIDO DINÁMICO SEGÚN EL TEMA SELECCIONADO
@@ -87,21 +87,124 @@ streamlit.markdown(f"<div class='sub-title'>Plataforma Interactiva Orientada a S
 # ----------------------------------------------------------------------------
 # CASO 1: FISIOLOGÍA RENAL
 # ----------------------------------------------------------------------------
-if "Fisiología Renal" in tema:
+if "Fisiologia Renal" in tema:
     # FASE 1
     streamlit.markdown("""
         <div class='phase-box fase1'>
             <div class='titulo-fase'>[Fase 1] El Filtro de Agua de la Vida (Concepto Intuitivo)</div>
-            <p>Imagina que los riñones de un perro son como el <b>sistema de filtración de una piscina olímpica</b>. Si la bomba de agua funciona bien, la basura se va y el agua se mantiene cristalina. Pero ¿qué pasa si una sustancia tóxica (como el anticongelante de carros o una infección grave) avienta arena dentro del motor de la bomba?</p>
-            <p>El filtro se tapa de golpe. La basura (toxinas urémicas) empieza a acumularse en la sangre, intoxicando a todo el cuerpo en cuestión de horas. Esto es una <b>Insuficiencia Renal Aguda</b>.</p>
+            <p>Imagina que los rinones de un perro son como el <b>sistema de filtracion de una piscina olimpica</b>. Si la bomba de agua funciona bien, la basura se va y el agua se mantiene cristalina. Pero ¿que pasa si una sustancia toxica (como el anticongelante de carros o una infeccion grave) avienta arena dentro del motor de la bomba?</p>
+            <p>El filtro se tapa de golpe. La basura (toxinas uremicas) empieza a acumularse en la sangre, intoxicando a todo el cuerpo en cuestion de horas. Esto es una <b>Insuficiencia Renal Aguda</b>.</p>
         </div>
     """, unsafe_allow_html=True)
 
-    with streamlit.expander("📝 RETO COGNITIVO 1: Demuestra tu intuición para desbloquear la Fase 2"):
+    with streamlit.expander("RETO COGNITIVO 1: Demuestra tu intuicion para desbloquear la Fase 2"):
         r1 = streamlit.radio(
-            "Si la bomba de filtración renal se queda sin presión por deshidratación severa, ¿cuál es el efecto inmediato?",
-            ["A) Las toxinas se eliminan más rápido.", "B) El organismo acumula desechos metabólicos tóxicos en la sangre por falta de filtrado.", "C) El riñón genera más nefronas de inmediato."],
+            "Si la bomba de filtracion renal se queda sin presion por deshidratacion severa, ¿cual es el efecto inmediato?",
+            ["A) Las toxinas se eliminan mas rapido.", "B) El organismo acumula desechos metabolicos toxicos en la sangre por falta de filtrado.", "C) El rinon genera mas nefronas de inmediato."],
             key="renal_r1"
+        )
+        if streamlit.button("Validar Fase 1", key="btn_r1"):
+            if "B)" in r1:
+                streamlit.success("Excelente! Fase 2 desbloqueada.")
+                streamlit.session_state.fase2_desbloqueada = True
+                streamlit.rerun()
+            else:
+                streamlit.error("Incorrecto. Analiza la falta de filtracion.")
+
+    # FASE 2
+    if streamlit.session_state.fase2_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase2'>
+                <div class='titulo-fase'>[Fase 2] Fisiopatologia de la Tasa de Filtracion Glomerular (Rigor Tecnico)</div>
+                <p>La Insuficiencia Renal Aguda se caracteriza por una caida abrupta de la <b>Tasa de Filtracion Glomerular (TFG)</b>, desencadenando <b>Azotemia</b>. A nivel epitelial, ocurre una <b>Necrosis Tubular Aguda (NTA)</b>, donde el filtrado celular sufre una fuga retrograda (back-leak), colapsando la presion hidrostatica glomerular.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        with streamlit.expander("RETO COGNITIVO 2: Evalua el rigor tecnico para desbloquear la Fase 3"):
+            r2 = streamlit.radio(
+                "¿Por que la Necrosis Tubular Aguda colapsa la filtracion renal?",
+                ["A) Por una reabsorcion retrograda anomala (back-leak) del filtrado hacia el intersticio.", "B) Por aumento drastico de la presion oncotica celular.", "C) Por aceleracion mitotica."],
+                key="renal_r2"
+            )
+            if streamlit.button("Validar Fase 2", key="btn_r2"):
+                if "A)" in r2:
+                    streamlit.success("Rigor impecable! Fase 3 desbloqueada.")
+                    streamlit.session_state.fase3_desbloqueada = True
+                    streamlit.rerun()
+                else:
+                    streamlit.error("Incorrecto. Revisa el concepto de back-leak.")
+
+    # FASE 3
+    if streamlit.session_state.fase3_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase3'>
+                <div class='titulo-fase'>[Fase 3] Caso Clinico de Aplicacion Real (Solucion Tangible)</div>
+                <p><b>Paciente:</b> Canino, Golden Retriever, 4 anos. Creatinina en 5.8 mg/dL y oliguria tras ingerir etilenglicol. <b>Plan de Accion:</b> Fluidoterapia intravenosa inmediata con soluciones cristaloides isotonicas para restablecer la perfusion glomerular y monitoreo de diuresis horaria.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        streamlit.balloons()
+
+# ----------------------------------------------------------------------------
+# CASO 2: BIOLOGÍA CELULAR Y MITOSIS
+# ----------------------------------------------------------------------------
+elif "Biologia Celular" in tema:
+    # FASE 1
+    streamlit.markdown("""
+        <div class='phase-box fase1'>
+            <div class='titulo-fase'>[Fase 1] La Fotocopiadora Biologica Descompuesta (Concepto Intuitivo)</div>
+            <p>Imagina que la division celular (mitosis) es como una <b>fotocopiadora industrial</b> que duplica los planos de un edificio. Si la fotocopiadora funciona bien, saca una copia identica y se apaga. Pero ¿que pasa si el boton de encendido se queda trabado y la maquina empieza a sacar millones de copias sin control, gastando todo el papel y la luz de la oficina?</p>
+            <p>Eso es un <b>tumor o cancer canino</b>: celulas rebeldes que olvidaron como dejar de fotocopiarse a si mismas, acumulandose y robando la energia y nutrientes de los tejidos sanos del perro.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    with streamlit.expander("RETO COGNITIVO 1: Demuestra tu intuicion para desbloquear la Fase 2"):
+        r1_bio = streamlit.radio(
+            "Bajo esta analogia, ¿que es un tumor maligno a nivel tisular?",
+            ["A) Una celula que decidio trabajar mas rapido para sanar un tejido.", "B) Una masa de copias celulares descontroladas que saturan y destruyen el espacio de las celulas sanas.", "C) Un virus que detiene la produccion de copias."],
+            key="bio_r1"
+        )
+        if streamlit.button("Validar Fase 1", key="btn_bio1"):
+            if "B)" in r1_bio:
+                streamlit.success("Excelente analogia comprendida! El puente al rigor tecnico formal de la mitosis esta abierto.")
+                streamlit.session_state.fase2_desbloqueada = True
+                streamlit.rerun()
+            else:
+                streamlit.error("Incorrecto. Piensa en la fotocopiadora atascada llenando la oficina de papel inservible.")
+
+    # FASE 2
+    if streamlit.session_state.fase2_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase2'>
+                <div class='titulo-fase'>[Fase 2] Control del Ciclo Celular y Complejos Ciclina-CDK (Rigor Tecnico)</div>
+                <p>En la oncologia molecular veterinaria, la replicacion descontrolada se debe a mutaciones en los genes que regulan los <b>puntos de control (checkpoints)</b> del ciclo celular, especificamente la transicion de la fase <b>G1 a S</b>. Las celulas neoplasicas presentan una sobreexpresion de las proteinas llamadas <b>Ciclinas</b> y sus cinasas dependientes (CDK).</p>
+                <p>Al alterarse esta maquinaria enzimatica, la celula evade la senal de detencion celular y entra en una <b>mitosis perpetua</b>, evadiendo los mecanismos de muerte celular programada o <b>Apoptosis</b> guiados normalmente por el gen supresor tumoral p53.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        with streamlit.expander("RETO COGNITIVO 2: Evalua el rigor tecnico para desbloquear la Fase 3"):
+            r2_bio = streamlit.radio(
+                "¿Que alteracion bioquimica molecular promueve el desarrollo del cancer celular canino?",
+                ["A) La activacion exacerbada de los mecanismos de apoptosis celular.", "B) La perdida de control en los checkpoints (G1 a S) por desregulacion de complejos Ciclina-CDK.", "C) El aumento de la presion osmotica mitocondrial."],
+                key="bio_r2"
+            )
+            if streamlit.button("Validar Fase 2", key="btn_bio2"):
+                if "B)" in r2_bio:
+                    streamlit.success("Brillante analisis bioanalitico! Has desbloqueado la fase de solucion diagnostica real.")
+                    streamlit.session_state.fase3_desbloqueada = True
+                    streamlit.rerun()
+                else:
+                    streamlit.error("Incorrecto. Analiza el papel de los checkpoints celulares.")
+
+    # FASE 3
+    if streamlit.session_state.fase3_desbloqueada:
+        streamlit.markdown("""
+            <div class='phase-box fase3'>
+                <div class='titulo-fase'>[Fase 3] Aplicacion Diagnostica: Citologia de Mastocitoma Canino (Solucion Tangible)</div>
+                <p><b>Caso Clinico:</b> Paciente Canino, Boxer, Hembra, 6 anos. Presenta una masa cutanea de consistencia firme en la region costal izquierda de crecimiento acelerado en el ultimo mes.</p>
+                <p><b>Diagnostico por Solucion Tangible:</b> Se realiza una Biopsia por Aspiracion con Aguja Delgada (BAAD). Al microscopio se observa una poblacion homogenea de celulas redondas con alta <b>relacion nucleo-citoplasma</b>, multiples figuras mitoticas atipicas (celulas dividiendose aberrantemente) y granulacion metacromatica intensa. Diagnostico definitivo: <b>Mastocitoma Grado II</b>. El tratamiento requiere reseccion quirurgica con margenes limpios e histopatologia inmediata.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        streamlit.balloons()
         )
         if streamlit.button("Validar Fase 1", key="btn_r1"):
             if "B)" in r1:
